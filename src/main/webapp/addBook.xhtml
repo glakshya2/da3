@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<h:head>
+    <title>Add New Book</title>
+</h:head>
+<h:body>
+    <h1>Add New Book</h1>
+
+    <h:form>
+        <h:panelGrid columns="2">
+            <h:outputLabel for="isbn" value="ISBN:" />
+            <h:panelGroup>
+                <h:inputText id="isbn" value="#{bookBean.newBook.isbn}" required="true">
+                    <f:validator validatorId="isbnValidator" />
+                    <f:ajax event="blur" render="isbnMessage" />
+                </h:inputText>
+                <h:message for="isbn" id="isbnMessage" style="color: red;" />
+            </h:panelGroup>
+
+            <h:outputLabel for="title" value="Title:" />
+            <h:inputText id="title" value="#{bookBean.newBook.title}" required="true" />
+
+            <h:outputLabel for="author" value="Author:" />
+            <h:inputText id="author" value="#{bookBean.newBook.author}" required="true" />
+
+            <h:outputLabel for="publisher" value="Publisher:" />
+            <h:inputText id="publisher" value="#{bookBean.newBook.publisher}" required="true" />
+
+            <h:outputLabel for="publicationDate" value="Publication Date (yyyy-MM-dd):" />
+            <h:inputText id="publicationDate" value="#{bookBean.newBook.publicationDate}" required="true">
+                <f:convertDateTime pattern="yyyy-MM-dd" />
+            </h:inputText>
+
+            <h:outputLabel for="availableCopies" value="Available Copies:" />
+            <h:inputText id="availableCopies" value="#{bookBean.newBook.availableCopies}" required="true" />
+
+            <h:panelGroup layout="block" style="text-align: right;" colspan="2">
+                <h:commandButton action="#{bookBean.addBook}" value="Add Book" />
+            </h:panelGroup>
+        </h:panelGrid>
+    </h:form>
+
+    <h2>All Books</h2>
+    <h:dataTable value="#{bookBean.allBooks}" var="book" border="1">
+        <h:column>
+            <f:facet name="header">Book ID</f:facet>
+            #{book.bookId}
+        </h:column>
+        <h:column>
+            <f:facet name="header">ISBN</f:facet>
+            #{book.isbn}
+        </h:column>
+        <h:column>
+            <f:facet name="header">Title</f:facet>
+            #{book.title}
+        </h:column>
+        <h:column>
+            <f:facet name="header">Author</f:facet>
+            #{book.author}
+        </h:column>
+        <h:column>
+            <f:facet name="header">Publisher</f:facet>
+            #{book.publisher}
+        </h:column>
+        <h:column>
+            <f:facet name="header">Publication Date</f:facet>
+            <h:outputText value="#{book.publicationDate}">
+                <f:convertDateTime pattern="yyyy-MM-dd" />
+            </h:outputText>
+        </h:column>
+        <h:column>
+            <f:facet name="header">Available Copies</f:facet>
+            #{book.availableCopies}
+        </h:column>
+    </h:dataTable>
+
+    <p>
+        <h:link outcome="index" value="Back to Home" />
+    </p>
+</h:body>
+</html>

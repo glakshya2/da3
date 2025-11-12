@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<h:head>
+    <title>Issue Book</title>
+</h:head>
+<h:body>
+    <h1>Issue Book</h1>
+
+    <h:form>
+        <h:messages globalOnly="true" layout="table" />
+
+        <h:panelGrid columns="2">
+            <h:outputLabel for="book" value="Select Book:" />
+            <h:selectOneMenu id="book" value="#{transactionBean.selectedBookId}" required="true">
+                <f:selectItem itemLabel="-- Select Book --" itemValue="" />
+                <f:selectItems value="#{transactionBean.availableBooks}" var="bookItem"
+                               itemLabel="#{bookItem.title} (ISBN: #{bookItem.isbn}, Available: #{bookItem.availableCopies})"
+                               itemValue="#{bookItem.bookId}" />
+            </h:selectOneMenu>
+
+            <h:outputLabel for="member" value="Select Member:" />
+            <h:selectOneMenu id="member" value="#{transactionBean.selectedMemberId}" required="true">
+                <f:selectItem itemLabel="-- Select Member --" itemValue="" />
+                <f:selectItems value="#{transactionBean.allMembers}" var="memberItem"
+                               itemLabel="#{memberItem.name} (#{memberItem.email})"
+                               itemValue="#{memberItem.memberId}" />
+            </h:selectOneMenu>
+
+            <h:outputLabel for="issueDate" value="Issue Date (yyyy-MM-dd):" />
+            <h:inputText id="issueDate" value="#{transactionBean.issueDate}" required="true">
+                <f:convertDateTime pattern="yyyy-MM-dd" />
+            </h:inputText>
+
+            <h:outputLabel for="dueDate" value="Due Date (yyyy-MM-dd):" />
+            <h:inputText id="dueDate" value="#{transactionBean.dueDate}" required="true">
+                <f:convertDateTime pattern="yyyy-MM-dd" />
+            </h:inputText>
+
+            <h:commandButton action="#{transactionBean.issueBook}" value="Issue Book" />
+        </h:panelGrid>
+    </h:form>
+
+    <p>
+        <h:link outcome="index" value="Back to Home" />
+    </p>
+</h:body>
+</html>

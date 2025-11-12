@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<h:head>
+    <title>Add New Member</title>
+</h:head>
+<h:body>
+    <h1>Add New Member</h1>
+
+    <h:form>
+        <h:panelGrid columns="2">
+            <h:outputLabel for="name" value="Name:" />
+            <h:inputText id="name" value="#{memberBean.newMember.name}" required="true" />
+
+            <h:outputLabel for="email" value="Email:" />
+            <h:panelGroup>
+                <h:inputText id="email" value="#{memberBean.newMember.email}" required="true">
+                    <f:validator validatorId="emailValidator" />
+                    <f:ajax event="blur" render="emailMessage" />
+                </h:inputText>
+                <h:message for="email" id="emailMessage" style="color: red;" />
+            </h:panelGroup>
+
+            <h:outputLabel for="phoneNumber" value="Phone Number:" />
+            <h:inputText id="phoneNumber" value="#{memberBean.newMember.phoneNumber}" />
+
+            <h:panelGroup layout="block" style="text-align: right;" colspan="2">
+                <h:commandButton action="#{memberBean.addMember}" value="Add Member" />
+            </h:panelGroup>
+        </h:panelGrid>
+    </h:form>
+
+    <h2>All Members</h2>
+    <h:dataTable value="#{memberBean.allMembers}" var="member" border="1">
+        <h:column>
+            <f:facet name="header">Member ID</f:facet>
+            #{member.memberId}
+        </h:column>
+        <h:column>
+            <f:facet name="header">Name</f:facet>
+            #{member.name}
+        </h:column>
+        <h:column>
+            <f:facet name="header">Email</f:facet>
+            #{member.email}
+        </h:column>
+        <h:column>
+            <f:facet name="header">Phone Number</f:facet>
+            #{member.phoneNumber}
+        </h:column>
+    </h:dataTable>
+
+    <p>
+        <h:link outcome="index" value="Back to Home" />
+    </p>
+</h:body>
+</html>

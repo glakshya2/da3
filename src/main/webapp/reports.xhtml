@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<h:head>
+    <title>Library Reports</title>
+</h:head>
+<h:body>
+    <h1>Library Reports</h1>
+
+    <h2>Currently Issued Books</h2>
+    <h:dataTable value="#{reportBean.issuedBooks}" var="transaction" border="1">
+        <h:column>
+            <f:facet name="header">Transaction ID</f:facet>
+            #{transaction.transactionId}
+        </h:column>
+        <h:column>
+            <f:facet name="header">Book Title</f:facet>
+            #{transaction.book.title}
+        </h:column>
+        <h:column>
+            <f:facet name="header">Member Name</f:facet>
+            #{transaction.member.name}
+        </h:column>
+        <h:column>
+            <f:facet name="header">Issue Date</f:facet>
+            <h:outputText value="#{transaction.issueDate}">
+                <f:convertDateTime pattern="yyyy-MM-dd" />
+            </h:outputText>
+        </h:column>
+        <h:column>
+            <f:facet name="header">Due Date</f:facet>
+            <h:outputText value="#{transaction.dueDate}">
+                <f:convertDateTime pattern="yyyy-MM-dd" />
+            </h:outputText>
+        </h:column>
+    </h:dataTable>
+
+    <h2>Overdue Books</h2>
+    <h:dataTable value="#{reportBean.overdueBooks}" var="transaction" border="1">
+        <h:column>
+            <f:facet name="header">Transaction ID</f:facet>
+            #{transaction.transactionId}
+        </h:column>
+        <h:column>
+            <f:facet name="header">Book Title</f:facet>
+            #{transaction.book.title}
+        </h:column>
+        <h:column>
+            <f:facet name="header">Member Name</f:facet>
+            #{transaction.member.name}
+        </h:column>
+        <h:column>
+            <f:facet name="header">Issue Date</f:facet>
+            <h:outputText value="#{transaction.issueDate}">
+                <f:convertDateTime pattern="yyyy-MM-dd" />
+            </h:outputText>
+        </h:column>
+        <h:column>
+            <f:facet name="header">Due Date</f:facet>
+            <h:outputText value="#{transaction.dueDate}">
+                <f:convertDateTime pattern="yyyy-MM-dd" />
+            </h:outputText>
+        </h:column>
+    </h:dataTable>
+
+    <p>
+        <h:link outcome="index" value="Back to Home" />
+    </p>
+</h:body>
+</html>

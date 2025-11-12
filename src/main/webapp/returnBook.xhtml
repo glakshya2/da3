@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<h:head>
+    <title>Return Book</title>
+    <h:outputScript library="jakarta.faces" name="jsf.js" />
+</h:head>
+<h:body>
+    <f:event type="preRenderView" listener="#{reportBean.loadReports}" />
+    <h1>Return Book</h1>
+
+    <h:form>
+        <h:panelGrid columns="2">
+            <h:outputLabel for="bookToReturn" value="Select Book to Return:" />
+            <h:selectOneMenu id="bookToReturn" value="#{transactionBean.selectedBookToReturn}" required="true" converter="bookConverter">
+                <f:selectItem itemLabel="-- Select Book --" itemValue="#{null}" noSelectionOption="true" />
+                <f:selectItems value="#{reportBean.issuedBooks}" var="transactionItem"
+                               itemLabel="#{transactionItem.book.title} (Member: #{transactionItem.member.name}) - Due: #{transactionItem.dueDate}"
+                               itemValue="#{transactionItem.book.bookId}" />
+            </h:selectOneMenu>
+            <h:outputText value="Selected Book: #{transactionBean.selectedBookToReturn.title}" />
+
+            <h:commandButton action="#{transactionBean.returnBook}" value="Return Book" />
+        </h:panelGrid>
+    </h:form>
+
+    <h2>All Transactions</h2>
+    <h:dataTable value="#{transactionBean.allTransactions}" var="transaction" border="1">
+        <h:column>
+            <f:facet name="header">Transaction ID</f:facet>
+            #{transaction.transactionId}
+        </h:column>
+        <h:column>
+            <f:facet name="header">Book Title</f:facet>
+            #{transaction.book.title}
+        </h:column>
+        <h:column>
+            <f:facet name="header">Member Name</f:facet>
+            #{transaction.member.name}
+        </h:column>
+        <h:column>
+            <f:facet name="header">Issue Date</f:facet>
+            <h:outputText value="#{transaction.issueDate}">
+                <f:convertDateTime pattern="yyyy-MM-dd" />
+            </h:outputText>
+        </h:column>
+        <h:column>
+            <f:facet name="header">Return Date</f:facet>
+            <h:outputText value="#{transaction.returnDate}">
+                <f:convertDateTime pattern="yyyy-MM-dd" />
+            </h:outputText>
+        </h:column>
+        <h:column>
+            <f:facet name="header">Due Date</f:facet>
+            <h:outputText value="#{transaction.dueDate}">
+                <f:convertDateTime pattern="yyyy-MM-dd" />
+            </h:outputText>
+        </h:column>
+        <h:column>
+            <f:facet name="header">Status</f:facet>
+            #{transaction.status}
+        </h:column>
+    </h:dataTable>
+
+    <p>
+        <h:link outcome="index" value="Back to Home" />
+    </p>
+</h:body>
+</html>
